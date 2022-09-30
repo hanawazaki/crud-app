@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap");
+html,
+body {
+  font-family: "Nunito", sans-serif;
+  font-style: normal;
+  background-color: #f8f8fa;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 50px 14px 14px 14px;
+}
+
+.nav-title {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+  color: #121f3e;
+}
+
+.content {
+  padding: 10px 14px 24px 14px;
+}
+
+.user-card {
+  height: 100%;
+  background: #fff;
+  border-radius: 26px;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  /* identical to box height */
+  text-align: center;
+  color: #121f3e;
+}
+.user-role {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #abb3c4;
+}
+.user-status > * {
+  margin: 0 2px;
+}
+.user-status.verified {
+  color: #2ed16c;
+}
+
+.user-status span,
+.user-status a {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}
+.user-status-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
