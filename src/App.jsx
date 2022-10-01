@@ -7,6 +7,7 @@ import Login from './views/Login'
 import Home from './views/Home'
 import NotFound from './views/NotFound'
 import Create from './views/Create';
+import Edit from './views/Edit';
 
 const PrivateRoute = ({ children, ...rest }) => {
   // auth
@@ -34,6 +35,15 @@ function App() {
           element={
             <PrivateRoute>
               <Create />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path={"/edit/:id"}
+          element={
+            <PrivateRoute>
+              <Edit />
             </PrivateRoute>
           }
         />
