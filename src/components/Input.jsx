@@ -16,20 +16,36 @@ const Input = ({
   isFocused,
   handleChange,
   isError,
-
+  isTextarea = false
 }) => {
   return (
-    <input
-      type={type}
-      name={name}
-      value={value}
-      className={`w-full text-base input-${variant} font-normal px-3 py-1.5 border border-solid ${isError && "input-error"} rounded m-0 placeholder=${placeHolder} autocomplete=${autoComplete} ${className}`}
-      autoComplete={autoComplete}
-      required={required}
-      onChange={(e) => handleChange(e)}
-      placeholder={placeHolder}
-      defaultValue={defaultValue}
-    />
+    isTextarea ? (
+      <textarea
+        name={name}
+        value={value}
+        className={`w-full text-base h-28 input-${variant} font-normal px-3 py-1.5 border border-solid ${isError && "input-error"
+          } rounded m-0 placeholder = ${placeHolder} autocomplete = ${autoComplete} ${className} `}
+        required={required}
+        onChange={(e) => handleChange(e)}
+        placeholder={placeHolder}
+        defaultValue={defaultValue}
+      >
+        {children}
+      </textarea>
+    ) : (
+      <input
+        type={type}
+        name={name}
+        value={value}
+        className={`w-full text-base input-${variant} font-normal px-3 py-1.5 border border-solid ${isError && "input-error"
+          } rounded m-0 placeholder = ${placeHolder} autocomplete = ${autoComplete} ${className} `}
+        autoComplete={autoComplete}
+        required={required}
+        onChange={(e) => handleChange(e)}
+        placeholder={placeHolder}
+        defaultValue={defaultValue}
+      />
+    )
   )
 }
 
@@ -48,4 +64,5 @@ Input.propTypes = {
   isFocused: PropTypes.bool,
   handleChange: PropTypes.func,
   isError: PropTypes.bool,
+  isTextarea: PropTypes.bool
 }

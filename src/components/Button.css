@@ -1,21 +1,21 @@
-@import "../App.css";
+@import "../index.css";
 
 .btn-primary {
   @apply bg-blue-500 text-white !important;
 }
 
 .btn-secondary {
-  @apply bg-gray-500 text-white;
+  @apply bg-gray-500 text-white !important;
 }
 
 .btn-success {
-  @apply bg-green-500 text-white;
+  @apply bg-green-500 text-white !important;
 }
 
 .btn-warning {
-  @apply bg-yellow-500 text-white;
+  @apply bg-yellow-500 text-white !important;
 }
 
 .btn-danger {
-  @apply bg-red-500 text-white;
+  @apply bg-red-500 text-white !important;
 }

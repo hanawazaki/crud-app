@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import Card from '../components/Card'
+import React, { useState, useEffect, useCallback } from 'react'
 import Spinner from '../components/Spinner'
 import { useNavigate } from "react-router-dom";
 import Button from '../components/Button'
@@ -15,28 +14,57 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    fetch("https://frontend-test-backend.tritronik.com/v1/projects/?sortFields=id&sortOrder=asc", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("access_token")
-      }
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.content) {
-          setData(json.content)
-          setLoading(false)
-          console.log('', json.content)
+    const fetchData = async () => {
+      const res = await fetch(`https://frontend-test-backend.tritronik.com/v1/projects/?sortFields=id&sortOrder=desc`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("access_token")
         }
-      })
+      });
+
+      const json = await res.json();
+
+      if (json.content) {
+        setData(json.content)
+        setLoading(false)
+      }
+    }
+
+    fetchData()
   }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch("https://frontend-test-backend.tritronik.com/v1/projects/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("access_token")
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(res.message);
+      }
+
+      const datacopy = [...data]
+      datacopy.splice(datacopy.findIndex(item => item.id === id), 1)
+      setData(datacopy)
+
+      navigate("/");
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Wrapper>
       <Header title="Project List" />
-      <div className="add flex justify-end">
+      <div className="add flex justify-end my-7">
         <Button
           type="button"
           color="primary"
@@ -47,7 +75,7 @@ const Home = () => {
         </Button>
 
       </div>
-      <div className="flex flex-wrap mt-2 pb-5">
+      <div className="flex flex-wrap mt-2 pb-5 ">
         {
           loading ? (
             <div className="flex justify-center items-center w-full">
@@ -55,7 +83,7 @@ const Home = () => {
             </div>
           ) :
             <div className="w-full py-2">
-              <div className=" user-card w-100">
+              <div className=" bg-white w-100 shadow-md h-full rounded-3xl mb-10 p-0">
                 <div className="mb-7">
                   <div className="overflow-x-auto ">
                     <div className="py-2 inline-block min-w-full ">
@@ -98,6 +126,7 @@ const Home = () => {
                                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap gap-1">
                                       <span className='mx-2'>
                                         <Button
+                                          color='success'
                                           className='cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105'
                                         >
                                           Edit
@@ -105,6 +134,8 @@ const Home = () => {
                                       </span>
                                       <span>
                                         <Button
+                                          onClick={() => handleDelete(item.id)}
+                                          color='danger'
                                           className='cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105'
                                         >
                                           Delete
